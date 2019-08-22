@@ -16,7 +16,7 @@ orr b1 b2 = b1 || b2;
 implica::Bool->Bool->Bool
 implica b1 b2 
             | nott b1 = True
-            | b1 && nott (b2) = False
+            | b1 && (nott b2) = False
             | b1 && b2 = True;
 
 xorr::Bool->Bool->Bool
