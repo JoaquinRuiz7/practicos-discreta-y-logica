@@ -1,36 +1,56 @@
 module PracticoBools where
+import Prelude (Show)
+data Bool = True|False deriving (Show)
+        
+not::Bool->Bool
+not b = case b of {
+    True -> False;
+    False->True;
+}
+not2::Bool->Bool
+not2 True = False
+not2 _ = True;
 
-nott::Bool->Bool
-nott b
-    | ( b == False ) = True
-    | otherwise = False;
+and::Bool->Bool->Bool
+and True True = True
+and _ _ = False;
 
-andd::Bool->Bool->Bool
-andd b1 b2 
-        | ( b1 && b2 ) = True
-        | otherwise = False;
+and2::Bool->Bool->Bool
+and2 b1 b2 = case b1 of{
+    True -> b2;
+    False -> False;
+};
 
-orr::Bool->Bool->Bool
-orr b1 b2 = b1 || b2;
+or::Bool->Bool->Bool
+or True _ = True
+or False b2 = b2;
+
+or2::Bool->Bool->Bool
+or2 b1 b2 = case b1 of {
+    True -> True;
+    False -> b2;
+};
 
 implica::Bool->Bool->Bool
-implica b1 b2 
-            | nott b1 = True
-            | b1 && (nott b2) = False
-            | b1 && b2 = True;
+implica False _ = True
+implica True b2 = b2;
+implica2::Bool->Bool->Bool
+implica2 b1 b2 = case b1 of {
+    False -> True;
+    True -> b2;
+};
 
-xorr::Bool->Bool->Bool
-xorr b1 b2 
-    | b1 && (nott b2) = True
-    | ( nott b1 ) && b2 = True
-    | otherwise = False;
-
+xor::Bool->Bool->Bool
+xor True False = True
+xor False b2 = b2;
+xor2::Bool->Bool->Bool
+xor2 b1 b2 = case b1 of {
+    True-> not b2;
+    False -> b2;
+};
 sii::Bool->Bool->Bool
-sii b1 b2 
-        | b1 && b2 = True
-        | b1 && (nott b2) = False
-        | (nott b1) && b2 = False
-        | (not b1) && (not b2) = True;
+sii True b2 = b2;
+sii False _ = False;
 
             
     
