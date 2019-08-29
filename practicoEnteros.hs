@@ -81,3 +81,8 @@ primerDivisorAux::Int->Int->Int
 primerDivisorAux n n1 
     | esDivisor n n1 = n1
     | otherwise = primerDivisorAux n (n1+1);
+    
+esPrimo::Int->Bool
+esPrimo n 
+    | (primerDivisor n == n) = True
+    | otherwise  = False;
