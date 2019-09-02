@@ -92,5 +92,5 @@ esPrimo::Int->Bool
 esPrimo n 
     | (primerDivisor n == n) = True
     | otherwise  = False;
-
+{--Hola soy facu probando github--}
 
