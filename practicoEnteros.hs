@@ -57,6 +57,7 @@ sumatoriaALaTres n
         | n == 0 = 0
         | otherwise = (aAlaEne n 3)+sumatoriaALaTres (n-1);
 
+
 sumaEntreAyB::Int->Int->Int
 sumaEntreAyB a b 
     | a > b = error "b debe ser mayor que a"
@@ -66,8 +67,11 @@ sumaEntreAyB a b
 sumaEntreAyBFuncion::Int->Int->(Int->Int)->Int
 sumaEntreAyBFuncion a b f
     | a > b = error "b debe ser mayor que a"
-    | a == b = a 
+    | a == b = f a 
     | a < b =  (f b) + sumaEntreAyBFuncion a (b-1) f;
+
+sumG::(Int->Int)->Int->Int
+sumG f n = sumaEntreAyBFuncion 0 n f;
 
 esDivisor::Int->Int->Bool
 esDivisor n1 n2 
@@ -76,13 +80,17 @@ esDivisor n1 n2
 
 primerDivisor::Int->Int
 primerDivisor n = primerDivisorAux n 2;
+
 {-Pre: n1 empieza en 2-}
+
 primerDivisorAux::Int->Int->Int
 primerDivisorAux n n1 
     | esDivisor n n1 = n1
     | otherwise = primerDivisorAux n (n1+1);
-    
+        
 esPrimo::Int->Bool
 esPrimo n 
     | (primerDivisor n == n) = True
     | otherwise  = False;
+
+
