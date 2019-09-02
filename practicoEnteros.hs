@@ -93,4 +93,5 @@ esPrimo n
     | (primerDivisor n == n) = True
     | otherwise  = False;
 {--Hola soy facu probando github--}
+{--Hola soy facu probando github 2--}
 
