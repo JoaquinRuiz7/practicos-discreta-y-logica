@@ -78,9 +78,6 @@ esDivisor n1 n2
     | (modulo n1 n2 == 0) = True
     | otherwise = False;
 
-primerDivisor::Int->Int
-primerDivisor n = primerDivisorAux n 2;
-
 {-Pre: n1 empieza en 2-}
 
 primerDivisorAux::Int->Int->Int
@@ -88,10 +85,22 @@ primerDivisorAux n n1
     | esDivisor n n1 = n1
     | otherwise = primerDivisorAux n (n1+1);
         
+primerDivisor::Int->Int
+primerDivisor n = primerDivisorAux n 2;
+
 esPrimo::Int->Bool
 esPrimo n 
     | (primerDivisor n == n) = True
     | otherwise  = False;
+
+minimoAcotado::(Int->Bool)->Int->Int->Int
+minimoAcotado p a b 
+    | a > b = a
+    | a<=b && p a = a
+    | a<=b && not ( p a ) = minimoAcotado p (a+1) b;
+
+primerDivisor2::Int->Int
+primerDivisor2 n = minimoAcotado (esDivisor n ) 2 n; 
 {--Hola soy facu probando github--}
 {--Hola soy facu probando github 2--}
 {--Hola soy facu probando github Test 3--}
