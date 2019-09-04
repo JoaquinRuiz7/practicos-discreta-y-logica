@@ -104,4 +104,8 @@ primerDivisor2 n = minimoAcotado (esDivisor n ) 2 n;
 {--Hola soy facu probando github--}
 {--Hola soy facu probando github 2--}
 {--Hola soy facu probando github Test 3--}
+mayorQueCumple::(Int->Bool)->Int->Int->Int
+mayorQueCumple p n n2  
+    | p n2 = n2 
+    | not (p n2) = mayorQueCumple p n (n2-1);
 
