@@ -101,7 +101,32 @@ minimoAcotado p a b
 
 primerDivisor2::Int->Int
 primerDivisor2 n = minimoAcotado (esDivisor n ) 2 n; 
-{--Hola soy facu probando github--}
-{--Hola soy facu probando github 2--}
-{--Hola soy facu probando github Test 3--}
 
+
+mayorQueCumple::(Int->Bool)->Int->Int->Int
+mayorQueCumple p n n2  
+    | p n2 = n2 
+    | not (p n2) = mayorQueCumple p n (n2-1);
+{--
+programar apply 
+recibe una funcion f por parametro y un entero n aploa f a n
+--}
+apply::(Int->Int)->Int->Int
+apply f n =  f n;
+{--
+programar gof 
+recibe una funcion f , una funcion g y un entero n , aplica f a n y luego g al resultado
+
+--}
+e3::Int->Int
+e3 = /x->(x*x*x);
+
+gof::(Int->Int)->(Int->Int)->Int->Int
+gof f g n = g ( apply f n);
+{--
+programar invertir 
+recibe una funcion que recibe un entero y un booleano , y retorna la misma funcion 
+, pero primero recibe el booleano y luego el entero 
+--}
+invertir::(Int->Bool->Int)->(Bool->Int->Int)
+invertir f = undefined  
