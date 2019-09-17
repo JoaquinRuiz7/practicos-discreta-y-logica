@@ -112,4 +112,10 @@ takeWhile2 p [] = []
 takeWhile2 p (x:xs)
     | not ( p x ) = []
     | p x = x:takeWhile2 p xs;
+
+dropWhile2::(a->Bool)->[a]->[a]
+dropWhile2 p [] = []
+dropWhile2 p (x:xs) 
+    | p x = dropWhile2 p xs 
+    | not (p x) = x:dropWhile2 p xs;
     
