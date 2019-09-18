@@ -1,4 +1,4 @@
-module Enteros where 
+module PracticoEnteros where 
 
 sumatoria::Int->Int
 sumatoria n 
@@ -119,7 +119,7 @@ recibe una funcion f , una funcion g y un entero n , aplica f a n y luego g al r
 
 --}
 e3::Int->Int
-e3 = /x->(x*x*x);
+e3 x =(x*x*x);
 
 gof::(Int->Int)->(Int->Int)->Int->Int
 gof f g n = g ( apply f n);

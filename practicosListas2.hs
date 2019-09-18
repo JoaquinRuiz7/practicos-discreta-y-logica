@@ -1,3 +1,5 @@
+module Listas where 
+import PracticoEnteros (esDivisor)
 {--Ejercicios practico de listas ejs extra--}
 duplicate::[Int]->[Int]
 duplicate [] = []
@@ -16,7 +18,13 @@ sumLargos (x:xs) = (largoLista x) + sumLargos xs;
 
 --}
 agregarAlFinal::a->[a]->[a]
-agregarAlFinal x ys = ys++[x];
+agregarAlFinal x (y:ys) = append (y:ys) [x];
+
+agregarAlFinalRecursivo::a->[a]->[a]
+agregarAlFinalRecursivo x [] = x:[]
+agregarAlFinalRecursivo x (y:ys) 
+    | not (esVacia ys) = append [y] (agregarAlFinalRecursivo x ys)
+    | esVacia ys = x:ys;
 
 invR::[a]->[a]
 invR = undefined
@@ -118,4 +126,54 @@ dropWhile2 p [] = []
 dropWhile2 p (x:xs) 
     | p x = dropWhile2 p xs 
     | not (p x) = x:dropWhile2 p xs;
+
+filter2::(a->Bool)->[a]->[a]
+filter2 p [] = []
+filter2 p (x:xs) 
+    | p x = x:filter2 p xs
+    | not ( p x ) = filter2 p xs;
+
+aplicaFuncion::(a->a)->[a]->[a]
+aplicaFuncion f [] = []
+aplicaFuncion f (x:xs) = (f x) : aplicaFuncion f xs;
+
+eliminarElemento::Eq a => a->[a]->[a]
+eliminarElemento e l = filter2 ( /= e) l;
+
+eliminarElementoR::Eq a => a->[a]->[a]
+eliminarElementoR e [] = [];
+eliminarElementoR e (x:xs) 
+    | e == x = eliminarElementoR e xs 
+    | e /= x = x:eliminarElementoR e xs;
+
+eliminarPrimerAparicion::Eq a => a->[a]->[a]
+eliminarPrimerAparicion e [] = []
+eliminarPrimerAparicion e (x:xs) 
+    | e == x = xs
+    | e /= x = x:eliminarPrimerAparicion e xs;
+    
+
+nElementos::Int->[a]->[a]
+nElementos n [] = []
+nElementos n (x:xs)
+    | n == 0 = []
+    | n > 0 = x:nElementos (n-1) xs
+
+
+elementosDesdeHasta::Int->Int->[a]->[a]
+elementosDesdeHasta n1 n2 [] = []
+elementosDesdeHasta n1 n2 l 
+    | n1 == n2 = (elementoEnPosicionI n2 l):[]
+    | n1 /= n2 = (elementoEnPosicionI n1 l) : elementosDesdeHasta (n1+1) n2 l;
+
+
+divisoresAux::Int->Int->[Int]
+divisoresAux = undefined
+divisores::Int->[Int]
+divisores n = undefined
+     
+    
+
+
+
     
