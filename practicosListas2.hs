@@ -1,22 +1,6 @@
 module Listas where 
-import PracticoEnteros (esDivisor)
-{--Ejercicios practico de listas ejs extra--}
-duplicate::[Int]->[Int]
-duplicate [] = []
-duplicate (x:xs) = x:x:(duplicate xs);
+import PracticoEnteros (esDivisor,modulo)
 
-largoLista::[a]->Int
-largoLista [] = 0
-largoLista (x:xs) = 1 + largoLista xs;
-
-sumLargos::[[a]]->Int
-sumLargos [] = 0
-sumLargos (x:xs) = (largoLista x) + sumLargos xs;
-
-
-{--
-
---}
 agregarAlFinal::a->[a]->[a]
 agregarAlFinal x (y:ys) = append (y:ys) [x];
 
@@ -26,31 +10,17 @@ agregarAlFinalRecursivo x (y:ys)
     | not (esVacia ys) = append [y] (agregarAlFinalRecursivo x ys)
     | esVacia ys = x:ys;
 
-invR::[a]->[a]
-invR = undefined
-
-prefijo::Eq a => [a]->[a]->Bool
-prefijo [] _ = True;
-prefijo (x:xs) (y:ys) 
-        | x == y = prefijo xs ys 
-        | not ( x == y ) = False;
-
-{--Ejercicio lista de listas--}
-
+invR::[Int]->[Int]
+invR [] = []
+invR (x:xs) = append (invR xs) [x];
 
 posicionPrimeroQueCumple::[a]->(a->Bool) ->Int
 posicionPrimeroQueCumple [] p = 0;
 posicionPrimeroQueCumple (x:xs) p
     | p x = 1
     | not (p x) = 1 + posicionPrimeroQueCumple xs p;
-{--
-ultimoQueCumple::[a]->(a->Bool)->Int
-ultimoQueCumple [] p = 0
-ultimoQueCumple (x:xs) p
-    | p x = 1
-    |
---}
-{--Ejercicios pizarron--}
+
+
 append::[a]->[a]->[a]
 append [] ys = ys
 append  (x:xs) ys = x:(append xs ys );
@@ -166,14 +136,66 @@ elementosDesdeHasta n1 n2 l
     | n1 == n2 = (elementoEnPosicionI n2 l):[]
     | n1 /= n2 = (elementoEnPosicionI n1 l) : elementosDesdeHasta (n1+1) n2 l;
 
-
+{--El que se pregunta si es divisor se pasa ultimo por parametro--}
 divisoresAux::Int->Int->[Int]
-divisoresAux = undefined
+divisoresAux  0 n2 = []
+divisoresAux n1 0 = []
+divisoresAux n1 n2 
+    | ( n2 > 0 && (esDivisor n1 n2) ) = n2 : divisoresAux n1 (n2-1)
+    | otherwise = divisoresAux n1 (n2-1);  
+
 divisores::Int->[Int]
-divisores n = undefined
-     
-    
+divisores n = divisoresAux n n;
 
+primo::Int->Bool
+primo n = ( ( esMiembro (divisores n) n  ) &&  ( esMiembro (divisores n) 1 ) ) && ( largoLista (divisores n) == 2 ) ;    
 
+listaPrimos::Int->[Int]
+listaPrimos 0 = []
+listaPrimos n 
+    | primo n = n:listaPrimos (n-1)
+    | not ( primo n ) = listaPrimos (n-1);
 
-    
+{--Ejercicios extra--}
+duplicate::[Int]->[Int]
+duplicate [] = []
+duplicate (x:xs) = x:x:(duplicate xs);
+
+largoLista::[a]->Int
+largoLista [] = 0
+largoLista (x:xs) = 1 + largoLista xs;
+
+sumLargos::[[a]]->Int
+sumLargos [] = 0
+sumLargos (x:xs) = (largoLista x) + sumLargos xs;
+
+prefijo::Eq a => [a]->[a]->Bool
+prefijo [] _ = True;
+prefijo (x:xs) (y:ys) 
+        | x == y = prefijo xs ys 
+        | x /= y  = False;
+
+primeroPosicion::[a] -> (a -> Bool) -> Int
+primeroPosicion [] p = 0;
+primeroPosicion (x:xs) p 
+    | p x = 1
+    | not ( p x ) = 1 + primeroPosicion xs p ;
+
+ultimoPosicion::Eq a =>[a]->(a->Bool)->Int
+ultimoPosicion [] p = undefined
+
+subLista::Eq a => [a] -> [a] -> Bool
+subLista [] _ = True
+subLista (x:xs) (y:ys) 
+    | x == y = subLista xs  ys
+    | x /= y = False;
+
+intercalarAux::[a]->[a]->Int->[a]
+intercalarAux [] l n = [] ++ l
+intercalarAux l [] n = l ++ [] 
+intercalarAux (x:xs) (y:ys) n
+    | (modulo n 2 == 0 ) = x:intercalarAux xs (y:ys) (n+1)
+    | (modulo n 2 /=0 ) = y:intercalarAux (x:xs) ys ( n+1 );
+
+intercalar::[a] -> [a] -> [a]
+intercalar l1 l2 = intercalarAux l1 l2 0; 
