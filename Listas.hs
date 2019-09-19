@@ -82,7 +82,7 @@ elementoEnPosicionI n (x:xs)
 posicionQueApareceElElemento::Eq a => a ->[a]->Int
 posicionQueApareceElElemento o [] = 0
 posicionQueApareceElElemento o (x:xs)
-    | x == o = 1
+    | x == o = 0
     | x/=o = 1 + posicionQueApareceElElemento o xs
     | xs == [] = largoLista (x:xs);
 
