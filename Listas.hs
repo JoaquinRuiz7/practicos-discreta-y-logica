@@ -179,7 +179,7 @@ prefijo (x:xs) (y:ys)
 primeroPosicion::[a] -> (a -> Bool) -> Int
 primeroPosicion [] p = 0;
 primeroPosicion (x:xs) p 
-    | p x = 1
+    | p x = 0
     | not ( p x ) = 1 + primeroPosicion xs p ;
 
 ultimoPosicion::Eq a =>[a]->(a->Bool)->Int
