@@ -137,6 +137,11 @@ elementosDesdeHasta n1 n2 l
     | n1 == n2 = (elementoEnPosicionI n2 l):[]
     | n1 /= n2 = (elementoEnPosicionI n1 l) : elementosDesdeHasta (n1+1) n2 l;
 
+fromTo::Int->Int->[Int]
+fromTo n n2 
+    | n == n2 = n:[]
+    | n < n2 = n:fromTo (n+1) n2;
+
 {--El que se pregunta si es divisor se pasa ultimo por parametro--}
 divisoresAux::Int->Int->[Int]
 divisoresAux  0 n2 = []
