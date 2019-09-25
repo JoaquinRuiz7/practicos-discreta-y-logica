@@ -223,3 +223,8 @@ elementAt (x:xs) n
     | n == 0 = x
     | n>0 = elementAt xs (n-1)
 
+borrar3::Int->[Int]->[Int]
+borrar3 n [] = []
+borrar3 n (x:xs)
+    | x == n = xs
+    | x /= n = x:borrar3 n xs;
