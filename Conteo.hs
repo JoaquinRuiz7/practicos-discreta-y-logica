@@ -13,9 +13,9 @@ En un siguiente paso, implementaremos una función agregarBit que, dada una list
 enteros, retorne el resultado de agregar 0 y 1 a cada una de las listas.
 Ejemplo agregarBit [[0,0,1,0,0],[1,0,1,0,0]] = [[0,0,0,1,0,0],[1,0,0,1,0,0],[0,1,0,1,0,0],[1,1,0,1,0,0]]
 --}
-agregarBit::[[Int]]->[[[Int]]]
+agregarBit::[[Int]]->[[Int]]
 agregarBit [] = []
-agregarBit (x:xs) = (agregar01 x):agregarBit xs;
+agregarBit (x:xs) = (agregar01 x) ++ agregarBit xs;
 {--
 Por último implementaremos una función posiblesNBits que reciba un entero n y retorne todos
 los posibles listas binarias de largo n. Es importante tener en cuenta que si bien hay que
@@ -25,4 +25,6 @@ aplicada a la lista vacía.
 Ejemplo posiblesNBits 2 = [[0,0],[0,1],[1,0],[1,1]]
 --} 
 posiblesNBits::Int->[[Int]]
-posiblesNBits = undefined
+posiblesNBits 0 = []
+posiblesNBits 1 = agregar01 []
+posiblesNBits n = agregarBit (posiblesNBits (n-1));
