@@ -46,13 +46,46 @@ numEntre a b
 agregarTodos::[Int]->[Int]->[[Int]]
 agregarTodos [] l2 = []
 agregarTodos (x:xs)  l2 = (x:l2):agregarTodos xs l2;
-numerosAlistasIndividuales::Int->[[Int]]
-numerosAlistasIndividuales n = numerosAlistasIndividualesAux 0 n;
-numerosAlistasIndividualesAux::Int->Int->[[Int]]
-numerosAlistasIndividualesAux  a b
-    | a > b = []
-    | a <= b = [a]:numerosAlistasIndividualesAux (a+1) b;
---agregar06 [1] = [[0,1],[1,1],[2,1],[3,1],[4,1],[5,1],[6,1]]
+
+{--
+Empezamos por implementar una función que, dada una lista de enteros, genere una lista de
+listas donde se generen todas las listas con los digitos del 0 al 6 al inicio.
+: agregar06 [1]= [[0,1],[1,1],[2,1],[3,1],[4,1],[5,1],[6,1]
+--}
 agregar06::[Int]->[[Int]]
-agregar06 [] = numerosAlistasIndividuales 6;
-agregar06 (x:xs) = undefined
+agregar06 l = agregarTodos (numEntre 0 6) l;
+{--
+En un siguiente paso implementaremos agregarDigito, que dada una lista de listas, retorna una
+nueva lista de listas, agregando a cada lista miembro todos los posibles dígitos entre 0 y 6.
+agregarDigito [[1]] = [[0,1],[1,1],[2,1],[3,1],[4,1],[5,1],[6,1]]
+--}
+agregarDigito::[[Int]]->[[Int]]
+agregarDigito [] = []
+agregarDigito (x:xs) = agregar06 x ++ agregarDigito xs;
+{--
+Por último implementaremos posiblesNDigitos, que recibe un entero que determina la cantidad
+de dígitos que tendrán todos los posibles números que queremos representar.
+Ejemplo: posiblesNDigitos 1 = [[0],[1],[2],[3],[4],[5],[6]]
+--}
+posiblesNDigitos::Int->[[Int]]
+posiblesNDigitos 0 = []
+posiblesNDigitos 1 = agregar06 []
+posiblesNDigitos n = agregarDigito(posiblesNDigitos (n-1));
+{--
+Siguiendo el mismo orden que el último ejercicio comenzaremos por implementar
+agregarTodosFiltrando, que funciona de la misma manera que agregar todos, con la diferencia
+que, antes de agregar un elemento de la primer lista a la segunda, verifica que el elemento no
+esté en la segunda lista
+agregarTodosFiltrando [1,2,3] [3] = [[1,3],[2,3]]
+--}
+contiene::Int->[Int]->Bool
+contiene e [] = False
+contiene e (x:xs) 
+    | x == e = True
+    | otherwise = contiene e xs;
+
+agregarTodosFiltrando::[Int]->[Int]->[[Int]]
+agregarTodosFiltrando [] l2 = [l2]
+agregarTodosFiltrando (x:xs) l2
+    | contiene x l2 = agregarTodosFiltrando xs l2
+    | otherwise = x:l2:agregarTodosFiltrando xs l2;
