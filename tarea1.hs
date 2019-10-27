@@ -76,12 +76,12 @@ eliminarRepetidos (x:xs)
     |otherwise = x:eliminarRepetidos xs;
 
 unir::[a]->[a]->[a]
-unir [] l = l
-unir l [] = l
-unir l l2 = l ++l2
+unir [] l2 = l2
+unir  (x:xs) l2 = x:(unir xs l2 );
 
 prefijo::Eq a=>[a]->[a]->Bool
 prefijo [] l = True
+prefijo l [] = True
 prefijo (x:xs) (y:ys)
         | x == y = prefijo xs ys
         | otherwise = False;
