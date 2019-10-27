@@ -12,14 +12,16 @@ entonces::Bool->Bool->Bool
 entonces False _ = True
 entonces True b2 = b2;
 -----------
+--Enteros--
 divisibleEntre3::Int->Bool
 divisibleEntre3 0 = True
 divisibleEntre3 n
     | n < 3 = False
     | n >= 3 = divisibleEntre3 (n-3);
---Pre solo b puede ser 0
+
 multiplicado::Int->Int->Int
 multiplicado a 0 = 0
+multiplicado 0 b = 0
 multiplicado a b = a + multiplicado a (b-1);
 
 filtradoFuncion :: (Int -> Int) -> (Int -> Bool) -> Int -> Int
@@ -40,70 +42,7 @@ sum2 :: Int -> Int
 sum2 0 = dosala 0 
 sum2 n = dosala n + sum2 (n-1);
 
--- Demostraciones 
---sum1 n = n(3n−1)/2
-{--
-Paso base ( n = 1)
-sum1 1 = 1(3*1-1)/2
-= def sum1   = aplicamos * y resta
-    3*1-2  =   1(3-1)/2
-    3-2    =   1(2)/2
-    1      =    1
-Paso inductivo ( n = n+1)
-Hi) sum1 n = n(3n-1)/2
-Ti) sum1 (n+1) = (n+1)(3(n+1)-1)/2
-Demostracion:
-#1
-sum1 (n+1) = (n+1)(3(n+1)-1)/2
-= def sum1
-3 * ( n + 1 ) - 2 + sum1 n
-= Hi) y distributiva
-3n + 3 - 2 + n(3n-1)/2
-= distributiva
-3n + 1 + 3n2-n/2
-= todo /2
-6n + 2 + 3n2 - n
-= cuuentas
-3n2+5n+2
-=ordenamiento
-3n2+2n+1/2
-#2
-(n+1) ( 3 (n+1)-1)/2
-= distributiva
-(n+1) (3n+3-1)/2
-=
-(n+1) (3n+2)/2
-= distributiva
-3n2+2n+3n+2
-= cuentas
-3n2+5n+2 
-#1 = #2 
-LQQD
-Demostracion 2:
- dosala (n + 1) = (sum2 n) + 1
- Paso base (n=0):
- dosala 1 = sum2 1 + 1
- = def dosala       = def sum2
-        2*dosala 0 = dosala 0 + 1 
-= def dosala        =def dosala 
-        2 * 1       = 1+1
-        2           =  2
-Paso inductivo:
-Hi) dosala ( n+1 ) = (sum2 n) + 1
-Ti) dosala ( (n+1)+1) = (sum2 (n+1) + 1)
-
-demostracion:
-dosala ( (n+1)+1) = (sum2 (n+1) +1)
-=sumamos
-dosala (n+2)      =  sum2 (n+2) 
-=def dosala        def sum2
-2*dosala(n+1)     = dosala (n+2) +sum2(n+1)
-=hi)              def dosala 
-2*sum2 n +1       = 2*dosala(n+1) +sum2(n+1) 
-                  hi)
-                  =2*sum2 n +1 + sum2(n+1)
---}
---Listas
+--Listas--
 descartarPrimeros::(a -> Bool)->[a]->[a]
 descartarPrimeros p [] = []
 descartarPrimeros p (x:xs)
@@ -112,27 +51,35 @@ descartarPrimeros p (x:xs)
 
 iguales::Eq a =>a->a-> Bool
 iguales e e2 = ( e == e2 );
-contiene::Eq a =>a->[a]->Bool
+contiene::Int->[Int]->Bool
 contiene e [] = False
-contiene e (x:xs)
-        | e == x = True
-        | otherwise = contiene e xs;
+contiene e (x:xs) 
+    | e == x = True
+    | otherwise = contiene e xs;
 
-esVacia::[a]->Bool
-esVacia [] = True
-esVacia _ = False;
+exor::[Int]->[Int]->[Int]
+exor [] l = l
+exor l [] = l
+exor l1 l2 = eliminarRepetidos ( (noContieneLista l1 l2)++(noContieneLista l2 l1) );
 
-exor :: Ord a => [a] -> [a] -> [a]
-exor [] l2 = l2
-exor l1 [] = l1
-exor (x:xs) (y:ys)  
-        | (contiene x (y:ys) ) || (contiene y (x:xs))   = exor xs ys
-        | esVacia (xs) 
-        | otherwise = x:y:exor xs ys;
+noContieneLista::[Int]->[Int]->[Int]
+noContieneLista l [] = []
+noContieneLista [] l2 = [] 
+noContieneLista (x:xs) l2 
+    |contiene x l2 = noContieneLista xs l2
+    |otherwise = x:noContieneLista xs l2;
+
+eliminarRepetidos::[Int]->[Int]
+eliminarRepetidos [] = []
+eliminarRepetidos (x:xs)
+    | contiene x xs = eliminarRepetidos xs
+    |otherwise = x:eliminarRepetidos xs;
+
 unir::[a]->[a]->[a]
 unir [] l = l
 unir l [] = l
 unir l l2 = l ++l2
+
 prefijo::Eq a=>[a]->[a]->Bool
 prefijo [] l = True
 prefijo (x:xs) (y:ys)
