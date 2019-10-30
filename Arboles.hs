@@ -41,3 +41,26 @@ aListaInorden ( Node a t1 t2 ) = aListaInorden t1 ++ a:[] ++ aListaInorden t2;
 aListaOrden::BinTree a -> [a]
 aListaOrden Empty = []
 aListaOrden (Node a t1 t2 ) = aListaOrden t1 ++ aListaOrden t2 ++ a:[];
+--Repartido ejercicios arboles
+data AB a = Hoja a | Nodo (AB a) (AB a)
+    deriving(Show)
+arbol::AB Bool
+arbol = Nodo ( Nodo (Hoja True) (Nodo (Hoja False) (Hoja False))) (Hoja True);
+-- que calcula la cantidad de hojas que tiene un ´arbol binario
+cantHojas::AB a -> Int
+cantHojas (Hoja a) = 1
+cantHojas (Nodo t1 t2) = cantHojas t1 + cantHojas t2;
+--que calcula la cantidad de nodos internos que tiene un ´arbol binario
+cantNodos::AB a -> Int
+cantNodos (Hoja a )= 0
+cantNodos (Nodo t1 t2) = 1+ cantNodos t1 + cantNodos t2;
+-- hojas::AB a -> [a], que devuelve una lista con las hojas de un ´arbol binario
+hojas::AB a -> [a]
+hojas (Hoja a) = a:[]
+hojas (Nodo t1 t2) = hojas t1 ++ hojas t2;
+--que devuelve el ´arbol espejo de un ´arbol binario (o sea, otro con los
+--mismos elementos, pero con todos los sub´arboles transpuestos)
+espejo::AB a -> AB a
+espejo (Hoja a) = (Hoja a)
+espejo (Nodo t1 t2 ) = Nodo ( espejo t2 ) (espejo t1);
+
