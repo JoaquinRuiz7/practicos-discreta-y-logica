@@ -41,6 +41,25 @@ aListaInorden ( Node a t1 t2 ) = aListaInorden t1 ++ a:[] ++ aListaInorden t2;
 aListaOrden::BinTree a -> [a]
 aListaOrden Empty = []
 aListaOrden (Node a t1 t2 ) = aListaOrden t1 ++ aListaOrden t2 ++ a:[];
+-- Cambiamos a arbol expresion aritmetica ExpArit
+-- 1- Programar una funcion que retorne la cantidad de nodes binarios
+
+data ExpArit = K Int| N ExpArit | Mas ExpArit ExpArit| Por ExpArit ExpArit
+    deriving (Show)
+
+cantNodosBinarios::ExpArit->Int
+cantNodosBinarios (K n) = 0
+cantNodosBinarios (N t1) = cantNodosBinarios t1
+cantNodosBinarios (Mas t1 t2 ) = 1+cantNodosBinarios t1+cantNodosBinarios t2
+cantNodosBinarios  (Por t1 t2) = 1 + cantNodosBinarios t1 + cantNodosBinarios t2;
+--Programar una funcion que evalue un ExpArit
+evaluarExpArit::ExpArit->Int
+evaluarExpArit ( K n ) = n
+evaluarExpArit ( N t1) = evaluarExpArit t1
+evaluarExpArit ( Mas t1 t2) = evaluarExpArit t1 + evaluarExpArit t2
+evaluarExpArit ( Por t1 t2) = evaluarExpArit t1 * evaluarExpArit t2;
+
+
 --Repartido ejercicios arboles
 data AB a = Hoja a | Nodo (AB a) (AB a)
     deriving(Show)
