@@ -57,7 +57,7 @@ cantNodosBinarios  (Por t1 t2) = 1 + cantNodosBinarios t1 + cantNodosBinarios t2
 --Programar una funcion que evalue un ExpArit
 evaluarExpArit::ExpArit->Int
 evaluarExpArit ( K n ) = n
-evaluarExpArit ( N t1) = evaluarExpArit t1
+evaluarExpArit ( N t1) = - (evaluarExpArit t1)
 evaluarExpArit ( Mas t1 t2) = evaluarExpArit t1 + evaluarExpArit t2
 evaluarExpArit ( Por t1 t2) = evaluarExpArit t1 * evaluarExpArit t2;
 -- Programar una funcion que elimine la doble negacion
