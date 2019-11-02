@@ -47,6 +47,8 @@ aListaOrden (Node a t1 t2 ) = aListaOrden t1 ++ aListaOrden t2 ++ a:[];
 data ExpArit = K Int| N ExpArit | Mas ExpArit ExpArit| Por ExpArit ExpArit
     deriving (Show)
 
+arbPrueba::ExpArit 
+arbPrueba= Mas ( (K 7)) ((N(K 3)));
 cantNodosBinarios::ExpArit->Int
 cantNodosBinarios (K n) = 0
 cantNodosBinarios (N t1) = cantNodosBinarios t1
@@ -58,6 +60,15 @@ evaluarExpArit ( K n ) = n
 evaluarExpArit ( N t1) = evaluarExpArit t1
 evaluarExpArit ( Mas t1 t2) = evaluarExpArit t1 + evaluarExpArit t2
 evaluarExpArit ( Por t1 t2) = evaluarExpArit t1 * evaluarExpArit t2;
+-- Programar una funcion que elimine la doble negacion
+eliminarDobleNegacion::ExpArit->ExpArit
+eliminarDobleNegacion (K n) = ( K n)
+eliminarDobleNegacion (N (N (K n)) ) = (K n)
+eliminarDobleNegacion (N (N t1)) = t1
+eliminarDobleNegacion (N t1) = ( N t1)
+eliminarDobleNegacion ( Mas t1 t2) = Mas (eliminarDobleNegacion t1) ( eliminarDobleNegacion t2)
+eliminarDobleNegacion ( Por t1 t2 ) = Por ( eliminarDobleNegacion t1) ( eliminarDobleNegacion t2);
+
 
 
 --Repartido ejercicios arboles
