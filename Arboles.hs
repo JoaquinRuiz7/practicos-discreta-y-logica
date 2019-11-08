@@ -48,7 +48,7 @@ data ExpArit = K Int| N ExpArit | Mas ExpArit ExpArit| Por ExpArit ExpArit
     deriving (Show)
 
 arbPrueba::ExpArit 
-arbPrueba= Mas ( (K 7)) ((N(K 3)));
+arbPrueba= Por (Mas ( (K 7)) ((K 3))) (K 10);
 cantNodosBinarios::ExpArit->Int
 cantNodosBinarios (K n) = 0
 cantNodosBinarios (N t1) = cantNodosBinarios t1
