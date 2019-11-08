@@ -17,7 +17,7 @@ Programar la funcion agregarArista::Grafo->Vertice->Vertice->Grafo
 que dado un grafo y dos vertices v1 y v2, agrego la arista que va desde el vertice a al vertice b en el grafo
 --}
 grafoPrueba::Grafo
-grafoPrueba = [(1,[2,3]),(2,[1]),(3,[1,2])];
+grafoPrueba = [(1,[2,3]),(2,[1,3]),(3,[1,2]) ,(4,[3]) ];
 
 agregarArista::Grafo->Vertice->Vertice->Grafo
 agregarArista [] v1 v2= []
@@ -45,6 +45,14 @@ aristas ( (vertice,l):ys ) = formarPares vertice l ++ aristas ys;
 
 {-- 5) Implementar gradoEntrada::Grafo->Vertice->Int, que dado un grafo y un vertice, 
 retorna el grado de entrada del vertice. --}
-
+contiene::Eq a =>a->[a]->Bool
+contiene e [] = False
+contiene e (x:xs) 
+    | x == e = True
+    | otherwise = contiene e xs;
+--type Grafo = [ (Vertice,[Vertice])]
 gradoEntrada::Grafo->Vertice->Int
-gradoEntrada g v = undefined
+gradoEntrada [] v = 0
+gradoEntrada ((vertice,l):xs) v
+    | contiene v l = 1+gradoEntrada xs v
+    | otherwise = gradoEntrada xs v;
